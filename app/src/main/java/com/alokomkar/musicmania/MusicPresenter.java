@@ -17,15 +17,22 @@ public class MusicPresenter implements MusicManiaContract.Presenter {
     //Use 'm' prefix to indicate global variable
     private MusicManiaContract.MusicView mMusicView;
     private CompositeDisposable mCompositeDisposable;
+    private NetComponent mNetComponent;
 
-    public MusicPresenter(MusicManiaContract.MusicView musicView) {
+    public MusicPresenter( NetComponent netComponent, MusicManiaContract.MusicView musicView ) {
         this.mMusicView = musicView;
+        this.mNetComponent = netComponent;
         this.mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void initNetworkCall(String searchString) {
-        Observable<MusicVideoModel> observable = NetworkRepository.getMusicVideosAPI().getMusicVideos(searchString, "musicVideo");
+    public void initNetworkCall( String searchString ) {
+
+        Observable<MusicVideoModel> observable = mNetComponent
+                .getRetrofit()
+                .create(GetMusicVideoAPI.class)
+                .getMusicVideos(searchString, "musicVideo");
+
         mMusicView.showProgressDialog();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

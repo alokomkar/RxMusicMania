@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MusicManiaContrac
         mEmptyListTextView = (TextView) findViewById(R.id.emptyListTextView);
         mArtistRecyclerView = (RecyclerView) findViewById(R.id.artistRecyclerView);
 
-        mMusicPresenter = new MusicPresenter(this);
+        mMusicPresenter = new MusicPresenter( MusicManiaApplication.getInstance().getmNetComponent(), this );
         mMusicPresenter.initNetworkCall("Linkin Park");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
