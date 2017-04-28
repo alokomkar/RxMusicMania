@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements MusicManiaContrac
 
     private ProgressDialog mProgressDialog;
     private MusicPresenter mMusicPresenter;
+    private RecyclerView mArtistRecyclerView;
 
     private TextView mEmptyListTextView;
 
@@ -25,9 +28,11 @@ public class MainActivity extends AppCompatActivity implements MusicManiaContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mEmptyListTextView = (TextView) findViewById(R.id.emptyListTextView);
+        mArtistRecyclerView = (RecyclerView) findViewById(R.id.artistRecyclerView);
 
         mMusicPresenter = new MusicPresenter(this);
         mMusicPresenter.initNetworkCall("Linkin Park");
@@ -90,7 +95,16 @@ public class MainActivity extends AppCompatActivity implements MusicManiaContrac
 
     @Override
     public void populateMusicVideos( MusicVideoModel musicVideoModel ) {
-        mEmptyListTextView.setText( musicVideoModel.toString() );
+        if( musicVideoModel != null && musicVideoModel.getResultCount() > 0 ) {
+            mEmptyListTextView.setVisibility(View.GONE);
+            mArtistRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
+            mArtistRecyclerView.setAdapter(new MusicRecyclerAdapter(MainActivity.this, musicVideoModel.getResults()));
+        }
+        else {
+            mEmptyListTextView.setVisibility(View.GONE);
+        }
+
+
     }
 
     @Override
