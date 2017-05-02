@@ -1,5 +1,5 @@
 # RxMusicMania
-Sample App to illustrate Gradle, MVP and RxJava Usage
+Sample App to illustrate Dagger, MVP and RxJava Usage
 
 # How to start going about the project creation 
 ## Branches :
