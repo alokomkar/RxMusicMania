@@ -1,4 +1,4 @@
-package com.alokomkar.musicmania;
+package com.alokomkar.musicmania.music;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -8,33 +8,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alokomkar.musicmania.MusicManiaApplication;
+import com.alokomkar.musicmania.R;
+import com.alokomkar.musicmania.music.model.MusicVideoModel;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements MusicManiaContract.MusicView {
 
 
     private ProgressDialog mProgressDialog;
-    private MusicPresenter mMusicPresenter;
     private RecyclerView mArtistRecyclerView;
-
     private TextView mEmptyListTextView;
 
+    @Inject
+    MusicPresenter mMusicPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Dagger.builder()
+                .netComponent(MusicManiaApplication.getInstance().getmNetComponent())
+                .build()
+                .inject(MainActivity.this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mEmptyListTextView = (TextView) findViewById(R.id.emptyListTextView);
         mArtistRecyclerView = (RecyclerView) findViewById(R.id.artistRecyclerView);
 
-        mMusicPresenter = new MusicPresenter( MusicManiaApplication.getInstance().getmNetComponent(), this );
         mMusicPresenter.initNetworkCall("Linkin Park");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

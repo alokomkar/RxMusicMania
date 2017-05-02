@@ -1,4 +1,4 @@
-package com.alokomkar.musicmania;
+package com.alokomkar.musicmania.music.model;
 
 /**
  * Created by Alok on 26/04/17.

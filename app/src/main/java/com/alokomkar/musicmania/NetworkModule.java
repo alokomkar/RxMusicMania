@@ -1,7 +1,6 @@
 package com.alokomkar.musicmania;
 
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -19,6 +18,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     private static final String API_URL = "https://itunes.apple.com";
+    private MusicManiaApplication mMusicManiaApplication;
+
+
+    public NetworkModule(MusicManiaApplication application) {
+        this.mMusicManiaApplication = application;
+    }
+/*
 
     @Provides
     @Singleton
@@ -34,20 +40,19 @@ public class NetworkModule {
         return GsonConverterFactory.create(gson);
     }
 
-    @Provides
-    @Singleton
-    Retrofit providesRetrofit(GsonConverterFactory gsonConverterFactory, RxJava2CallAdapterFactory rxJava2CallAdapterFactory) {
-        return new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(gsonConverterFactory)
-                .addCallAdapterFactory(rxJava2CallAdapterFactory)
-                .build();
-    }
+*/
+
 
     @Provides
     @Singleton
-    RxJava2CallAdapterFactory providesRxJava2CallAdapterFactory() {
-        return RxJava2CallAdapterFactory.create();
+    Retrofit providesRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
     }
+
+
 
 }

@@ -1,5 +1,7 @@
 package com.alokomkar.musicmania;
 
+import com.alokomkar.musicmania.music.model.MusicVideoModel;
+
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

@@ -1,4 +1,6 @@
-package com.alokomkar.musicmania;
+package com.alokomkar.musicmania.music;
+
+import com.alokomkar.musicmania.music.model.MusicVideoModel;
 
 /**
  * Created by Alok on 26/04/17.

@@ -1,4 +1,9 @@
-package com.alokomkar.musicmania;
+package com.alokomkar.musicmania.music;
+
+import com.alokomkar.musicmania.GetMusicVideoAPI;
+import com.alokomkar.musicmania.music.model.MusicVideoModel;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -7,6 +12,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
 
 /**
  * Created by Alok on 26/04/17.
@@ -17,19 +23,19 @@ public class MusicPresenter implements MusicManiaContract.Presenter {
     //Use 'm' prefix to indicate global variable
     private MusicManiaContract.MusicView mMusicView;
     private CompositeDisposable mCompositeDisposable;
-    private NetComponent mNetComponent;
+    private Retrofit mRetrofit;
 
-    public MusicPresenter( NetComponent netComponent, MusicManiaContract.MusicView musicView ) {
+    @Inject
+    public MusicPresenter( Retrofit retrofit, MusicManiaContract.MusicView musicView ) {
         this.mMusicView = musicView;
-        this.mNetComponent = netComponent;
+        this.mRetrofit = retrofit;
         this.mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void initNetworkCall( String searchString ) {
 
-        Observable<MusicVideoModel> observable = mNetComponent
-                .getRetrofit()
+        Observable<MusicVideoModel> observable = mRetrofit
                 .create(GetMusicVideoAPI.class)
                 .getMusicVideos(searchString, "musicVideo");
 

@@ -15,6 +15,11 @@ public class MusicManiaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        mNetComponent = DaggerNetComponent
+                .builder()
+                .appModule(new AppModule(MusicManiaApplication.this)) // This also corresponds to the name of your module: %component_name%Module
+                .networkModule(new NetworkModule(MusicManiaApplication.this))
+                .build();
 
 
     }

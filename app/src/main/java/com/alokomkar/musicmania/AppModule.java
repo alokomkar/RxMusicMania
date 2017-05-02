@@ -1,7 +1,5 @@
 package com.alokomkar.musicmania;
 
-import android.app.Application;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -22,7 +20,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Application providesApplication() {
+    MusicManiaApplication providesApplication() {
         return mApplication;
     }
 
