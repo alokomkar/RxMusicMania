@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MusicManiaContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Dagger.builder()
+        DaggerMusicComponent.builder()
                 .netComponent(MusicManiaApplication.getInstance().getmNetComponent())
                 .build()
                 .inject(MainActivity.this);
