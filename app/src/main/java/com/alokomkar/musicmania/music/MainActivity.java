@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements MusicManiaContrac
 
         DaggerMusicComponent.builder()
                 .netComponent(MusicManiaApplication.getInstance().getmNetComponent())
+                .musicModule(new MusicModule(this))
                 .build()
                 .inject(MainActivity.this);
 
